@@ -44,3 +44,20 @@ https://github.com/compromise-evident/airgapFTP/assets/75550631/4a9a4f20-4205-4f
 See [LED.cpp](https://github.com/compromise-evident/airgapFTP/blob/main/Other/LED/LED.cpp). (Might need to tilt photoresistor away as above. Use it in a dark enclosure.) <br>
 <sub>*Receiving machine must have audio recording hardware at least like that of the Dell Latitude E5500 (made in 2008.) <br>
 If you own a modern thousand-dollar laptop, this won't work; your mic line is always noisy, even when disabled.<sub/>
+
+<br>
+<br>
+
+# Or 1kB/s (press enter & play wav at the same time)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/compromise-evident/airgapFTP/main/Other/aux/aux_cord.png">
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/compromise-evident/airgapFTP/main/Other/aux/Terminal_20686babfe4882286b0217374c0c4f45.png">
+</p>
+
+See [aux.cpp](https://github.com/compromise-evident/airgapFTP/blob/main/Other/aux/aux.cpp) <br>
+<sub>*Receiving machine must have audio recording hardware at least like that of the Dell Latitude E5500 (made in 2008.) <br>
+If you own a modern thousand-dollar laptop, this won't work; your mic line is always noisy, even when disabled.<sub/>
