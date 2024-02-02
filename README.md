@@ -12,7 +12,7 @@ https://github.com/compromise-evident/airgapFTP/assets/75550631/cabe9cfb-08b6-44
 <br>
 <br>
 
-# Solder photoresistors on leads who type if shorted
+# Solder photoresistors on leads which type if shorted
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/compromise-evident/airgapFTP/main/Other/Keyboard_photoresistors_d64aedee67e91108087d5896876716c1.jpg">
