@@ -40,3 +40,5 @@ https://github.com/compromise-evident/airgapFTP/assets/75550631/cabe9cfb-08b6-44
 </p>
 
 See [LED.cpp](https://github.com/compromise-evident/airgapFTP/blob/main/Other/LED/LED.cpp)
+<sup>*Receiving machine must have audio recording hardware at least like that of the Dell Latitude E5500 (made in 2008.) <br>
+If you own a modern thousand-dollar laptop, this just won't work; your microphone line is always noisy, even when disabled.<sup/>
