@@ -76,7 +76,7 @@ If you own a modern thousand-dollar laptop, this won't work; your mic line is al
   Go to Settings, Sharing. Enable sharing, then enable
   "File Sharing" without password. This creates a "Public"
   folder in /home/user/ if missing.
-* Run these tools in a new folder in /home/user/Public.
+* Sending machine should run these tools in a new folder in /home/user/Public.
 * Now any machine on that network has read / write access
   to that "Public" folder. Find it in your files browser
   in "Browse Network" / "Other Locations".
