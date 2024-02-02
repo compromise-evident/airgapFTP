@@ -66,3 +66,17 @@ If you own a modern thousand-dollar laptop, this won't work; your mic line is al
 See [aux.cpp](https://github.com/compromise-evident/airgapFTP/blob/main/Other/aux/aux.cpp) <br>
 <sub>*Receiving machine must have audio recording hardware at least like that of the Dell Latitude E5500 (made in 2008.) <br>
 If you own a modern thousand-dollar laptop, this won't work; your mic line is always noisy, even when disabled.<sub/>
+
+<br>
+<br>
+
+# Send files via local network.
+
+* Sending machine should have Gnome.
+  Go to Settings, Sharing. Enable sharing, then enable
+  "File Sharing" without password. This creates a "Public"
+  folder in /home/user/ if missing.
+* Run these tools in a new folder in /home/user/Public.
+* Now any machine on that network has read / write access
+  to that "Public" folder. Find it in your files browser
+  in "Browse Network" / "Other Locations".
