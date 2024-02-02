@@ -25,7 +25,7 @@ https://github.com/compromise-evident/airgapFTP/assets/75550631/cabe9cfb-08b6-44
 <br>
 <br>
 
-# Or at 345B/s (must press enter & play wav manually)
+# Or 345B/s (press enter & play wav at the same time)
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/compromise-evident/airgapFTP/main/Other/LED/Close-up.jpeg">
