@@ -39,6 +39,8 @@ https://github.com/compromise-evident/airgapFTP/assets/75550631/cabe9cfb-08b6-44
   <img src="https://raw.githubusercontent.com/compromise-evident/airgapFTP/main/Other/LED/Terminal_36d7579acafa3983936d0f34204d4993.png">
 </p>
 
-See [LED.cpp](https://github.com/compromise-evident/airgapFTP/blob/main/Other/LED/LED.cpp) <br>
+https://github.com/compromise-evident/airgapFTP/assets/75550631/4a9a4f20-4205-4f49-96c6-10445f4c7c2d
+
+See [LED.cpp](https://github.com/compromise-evident/airgapFTP/blob/main/Other/LED/LED.cpp) You may need to tilt the photoresistor away from the brightness as shown above. <br>
 <sub>*Receiving machine must have audio recording hardware at least like that of the Dell Latitude E5500 (made in 2008.) <br>
 If you own a modern thousand-dollar laptop, this just won't work; your microphone line is always noisy, even when disabled.<sub/>
