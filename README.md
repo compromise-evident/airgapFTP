@@ -21,3 +21,22 @@ https://github.com/compromise-evident/airgapFTP/assets/75550631/cabe9cfb-08b6-44
 <p align="center">
   <img src="https://raw.githubusercontent.com/compromise-evident/airgapFTP/main/Other/Terminal_c7d695b10a110f7bca1be536ec85399d.png">
 </p>
+
+<br>
+<br>
+
+# Or at 345B/s (must press enter & play wav manually)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/compromise-evident/airgapFTP/main/Other/LED/Close-up.jpeg">
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/compromise-evident/airgapFTP/main/Other/LED/Materials.jpeg">
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/compromise-evident/airgapFTP/main/Other/LED/Terminal_36d7579acafa3983936d0f34204d4993.png">
+</p>
+
+See [LED.cpp](https://github.com/compromise-evident/airgapFTP/blob/main/Other/LED/LED.cpp)
