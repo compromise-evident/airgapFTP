@@ -70,7 +70,7 @@ If you own a modern thousand-dollar laptop, this won't work; your mic line is al
 <br>
 <br>
 
-# Send files via local network.
+# Send files to sending machine via local network.
 
 * Sending machine should have Gnome.
   Go to Settings, Sharing. Enable sharing, then enable
