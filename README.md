@@ -79,4 +79,4 @@ If you own a modern thousand-dollar laptop, this won't work; your mic line is al
 * Sending machine should run these tools in a new folder in /home/user/Public.
 * Now any machine on that network has read / write access
   to that "Public" folder. Find it in your files browser
-  in "Browse Network" / "Other Locations".
+  in "Browse Network" / "Other Locations" and keep dropping files in folder "Send".
