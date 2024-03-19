@@ -32,6 +32,12 @@ https://github.com/compromise-evident/airgapFTP/assets/75550631/cabe9cfb-08b6-44
 
 # Or 345B/s (press enter & play wav at the same time)
 
+This method proves that modern generic photoresistors are
+sensitive to at least 5,520 flashes of light per second
+(an opposite bit is appended to each data bit to keep
+the LED brightness normalized.) The bottleneck is the LED;
+it cannot become dark fast enough after each flash of light.
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/compromise-evident/airgapFTP/main/Other/LED/Close-up.jpeg">
 </p>
@@ -80,3 +86,11 @@ If you own a modern thousand-dollar laptop, this won't work; your mic line is al
 * Now any machine on that network has read / write access
   to that "Public" folder. Find it in your files browser
   in "Browse Network" or "Other Locations" and keep dropping files in folder "Send".
+
+<br>
+<br>
+
+# Appendix
+
+airgapFTP has been written about on
+[HACKADAY](https://hackaday.com/2024/03/19/photoresistors-provide-air-gap-data-transfer-slowly/). Thank you for the recognition.
