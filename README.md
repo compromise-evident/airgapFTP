@@ -33,7 +33,7 @@ https://github.com/compromise-evident/airgapFTP/assets/75550631/cabe9cfb-08b6-44
 # Or 345B/s (press enter & play wav at the same time)
 
 This method proves that modern generic photoresistors are
-sensitive to at least 5,520 flashes of light per second
+sensitive to at least 5,520 adjustments in brightness per second
 (an opposite bit is appended to each data bit to keep
 the LED brightness normalized.) The bottleneck is the LED;
 it cannot become dark fast enough after each flash of light.
