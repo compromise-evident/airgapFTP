@@ -36,7 +36,7 @@ This method proves that modern generic photoresistors are
 sensitive to at least 5,520 adjustments in brightness per second
 (an opposite bit is appended to each data bit to keep
 the LED brightness normalized.) The bottleneck is the LED;
-it cannot become dark fast enough after each flash of light.
+it cannot become darker fast enough after each flash of light.
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/compromise-evident/airgapFTP/main/Other/LED/Close-up.jpeg">
