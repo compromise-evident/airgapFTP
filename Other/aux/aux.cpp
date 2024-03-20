@@ -210,7 +210,7 @@ int main()
 			cache[0] = cache[1];
 			cache[1] = cache[2];
 			if(garbage_byte > 95) {cache[2] = '#';}
-			else                    {cache[2] = ' ';}
+			else                  {cache[2] = ' ';}
 			
 			if((cache[0] == ' ')
 			&& (cache[1] == '#')
@@ -234,7 +234,7 @@ int main()
 				cache[0] = cache[1];
 				cache[1] = cache[2];
 				if(garbage_byte > 95) {cache[2] = '#'; pound_counter++;}
-				else                    {cache[2] = ' ';                 }
+				else                  {cache[2] = ' ';                 }
 				
 				if((cache[0] == ' ')
 				&& (cache[1] == '#')
