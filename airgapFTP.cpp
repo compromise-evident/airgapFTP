@@ -1,4 +1,4 @@
-/// airgapFTP - fully automated airgap FTP at 1B/s                              Run it: "apt install g++ geany". Open this in Geany. Hit F9 once. F5 to run.
+/// airgapFTP - fully automated airgap FTP at 1B/s                              Run it: "apt install g++ geany". Open the .cpp in Geany. Hit F9 once. F5 to run.
 ///             using keyboard guts & photoresistors.
 ///             Keep dropping files in folder "Send".
 

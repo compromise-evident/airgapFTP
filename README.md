@@ -1,3 +1,5 @@
+Run it: ```apt install g++ geany```. Open the .cpp in Geany. Hit F9 once. F5 to run.
+
 https://github.com/compromise-evident/airgapFTP/assets/75550631/cabe9cfb-08b6-44af-8240-1c76162d4c3f
 
 <br>
