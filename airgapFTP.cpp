@@ -1,43 +1,21 @@
-/// airgapFTP - fully automated airgap FTP at 1B/s                              Run it: "apt install g++ geany". Open the .cpp in Geany. Hit F9 once. F5 to run.
-///             using keyboard guts & photoresistors.
-///             Keep dropping files in folder "Send".
+//YOUR CONTROLS:                                                                Run it: "apt install g++ geany". Open the .cpp in Geany. Hit F9 once. F5 to run.
+char time_consumption[] = {"sleep 0.056"}; //Smaller = faster boxes.
 
+/*Version 3.0.0 - Fully automated airgap FTP at 1B/s using keyboard
+guts & photoresistors. Keep dropping files in folder "Send". */
 
-/* Version 2.0.0
-1kB in 17 minutes. Max file size: 12.49 MB (1,157 days to transfer.) */
+/*Max file size to send: 4,294,967,295 bits.
+Empty files will be ignored and deleted.
+All files will be renamed, for example:
+"2025-10-19_20:34:55___Sun_Oct_19_08:34:55_PM_MDT_2025"
+This same date precedes each line in "Saved_as_text". */
 
 #include <fstream>
 #include <iostream>
 using namespace std;
 int main()
-{	/*\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\//////////////////////////////////////
-	\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  /////////////////////////////////////
-	\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\    ////////////////////////////////////
-	\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\      ///////////////////////////////////
-	\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\        //////////////////////////////////
-	\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\            ////////////////////////////////
-	\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\              ///////////////////////////////
-	\\\\\\\\\\\\\\\\\\\\\\\\\\\\\       your       /////////////////////////////
-	\\\\\\\\\\\\\\\\\\\\\\\\\\\       controls       ///////////////////////////
-	\\\\\\\\\\\\\\\\\\\\\\\                              ///////////////////////
-	\\\\\\\\\\\\\\\\\\                                        ////////////////*/
-	
-	char time_consumption[100] = {"sleep 0.056"}; //DEFAULT = "sleep 0.056"
-	//                           Increase for slower boxes. Decrease for faster.
-	//                           If mechanical keyboard, make it lightning-fast.
-	
-	/*////////////////                                        \\\\\\\\\\\\\\\\\\
-	///////////////////////                              \\\\\\\\\\\\\\\\\\\\\\\
-	///////////////////////////                      \\\\\\\\\\\\\\\\\\\\\\\\\\\
-	/////////////////////////////                  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-	///////////////////////////////              \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-	////////////////////////////////            \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-	//////////////////////////////////        \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-	///////////////////////////////////      \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-	////////////////////////////////////    \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-	/////////////////////////////////////  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-	//////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
-	
+{	int raw_byte;
+	char file_byte;
 	ifstream in_stream;
 	ofstream out_stream;
 	
@@ -55,7 +33,7 @@ int main()
 	     << "      Set terminal to 80x24, \"White on black\".\n"
 	     << "         Tape one photoresistor to each eye\n"
 	     << "            thoroughly. Set brightness to\n"
-	     << "                ~50%. Sender?  y/n: ";
+	     << "                ~20%. Sender?  y/n: ";
 	
 	char user_option; cin >> user_option;
 	if((user_option != 'y') && (user_option != 'n')) {cout << "\nInvalid.\n"; return 0;}
@@ -67,10 +45,8 @@ int main()
 	//_______________________________________________________Send_____________________________________________________//
 	if(user_option == 'y')
 	{	system("mkdir Send -p");
-		system("mkdir Done -p");
 		system("mkdir temp -p");
 		
-		char garbage_byte;
 		for(long long files_sent = 0;;)
 		{	system("clear"); system("clear");
 			cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n" << files_sent << " sent. Keep dropping files in folder \"Send\"...\n";
@@ -78,186 +54,41 @@ int main()
 			//Waits for files in folder "Send".
 			for(;;)
 			{	system("sleep 5");
-				system("ls Send > temp/file_names_in_Send");
-				in_stream.open("temp/file_names_in_Send");
-				in_stream.get(garbage_byte);
+				system("ls -t -r Send > temp/f");
+				in_stream.open("temp/f");
+				in_stream.get(file_byte);
 				if(in_stream.eof() == false) {in_stream.close(); break;}
 				in_stream.close();
 			}
 			
-			//Makes path to first file in folder "Send".
+			//Makes path to oldest file in folder "Send".
 			char path_to_file[10000] = {"Send/"};
 			int path_to_file_null_bookmark = 5;
-			in_stream.open("temp/file_names_in_Send");
-			in_stream.get(garbage_byte);
-			for(; garbage_byte != '\n';) {path_to_file[path_to_file_null_bookmark] = garbage_byte; in_stream.get(garbage_byte); path_to_file_null_bookmark++;}
+			in_stream.open("temp/f");
+			in_stream.get(file_byte);
+			for(; file_byte != '\n'; path_to_file_null_bookmark++) {path_to_file[path_to_file_null_bookmark] = file_byte; in_stream.get(file_byte);}
 			in_stream.close();
-			
-			//Copies file to folder "Done" but renames it to       "2024-01-28_23:06:58___Sun_Jan_28_11:06:58_PM_MST_2024___your-file-name".
-			char path_to_Done[10000] = {"Done/"};
-			int path_to_Done_null_bookmark = 5;
-			
-			system("date --rfc-3339=seconds > temp/last_time");
-			in_stream.open("temp/last_time");
-			for(int a = 0; a < 19; a++)
-			{	in_stream.get(garbage_byte);
-				if(garbage_byte == 32) {path_to_Done[path_to_Done_null_bookmark] = '_'         ;}
-				else                   {path_to_Done[path_to_Done_null_bookmark] = garbage_byte;}
-				path_to_Done_null_bookmark++;
-			}
-			in_stream.close();
-			
-			path_to_Done[path_to_Done_null_bookmark    ] = '_';
-			path_to_Done[path_to_Done_null_bookmark + 1] = '_';
-			path_to_Done[path_to_Done_null_bookmark + 2] = '_';
-			path_to_Done_null_bookmark += 3;
-			
-			system("date > temp/last_time");
-			in_stream.open("temp/last_time");
-			for(int a = 0; a < 31; a++)
-			{	in_stream.get(garbage_byte);
-				if(garbage_byte == 32) {path_to_Done[path_to_Done_null_bookmark] = '_'         ;}
-				else                   {path_to_Done[path_to_Done_null_bookmark] = garbage_byte;}
-				path_to_Done_null_bookmark++;
-			}
-			in_stream.close();
-			
-			path_to_Done[path_to_Done_null_bookmark    ] = '_';
-			path_to_Done[path_to_Done_null_bookmark + 1] = '_';
-			path_to_Done[path_to_Done_null_bookmark + 2] = '_';
-			path_to_Done_null_bookmark += 3;
-			
-			path_to_file_null_bookmark = 5;
-			for(; path_to_file[path_to_file_null_bookmark] != '\0';)
-			{	path_to_Done[path_to_Done_null_bookmark] = path_to_file[path_to_file_null_bookmark];
-				path_to_Done_null_bookmark++;
-				path_to_file_null_bookmark++;
-			}
-			
-			in_stream.open(path_to_file);
-			out_stream.open(path_to_Done);
-			in_stream.get(garbage_byte);
-			for(; in_stream.eof() == false;) {out_stream.put(garbage_byte); in_stream.get(garbage_byte);}
-			in_stream.close();
-			out_stream.close();
 			
 			//Gets file size in bits.
 			long long total_bits = 0;
 			in_stream.open(path_to_file);
-			in_stream.get(garbage_byte);
+			in_stream.get(file_byte);
 			for(; in_stream.eof() == false;)
-			{	in_stream.get(garbage_byte);
+			{	in_stream.get(file_byte);
 				total_bits++;
 			}
 			total_bits *= 8;
 			in_stream.close();
 			
-			//Adds to total_bits the size of file name +1.
-			int total_bits_supplement = 0;
-			path_to_file_null_bookmark = 5;
-			for(; path_to_file[path_to_file_null_bookmark] != '\0';)
-			{	total_bits_supplement++;
-				path_to_file_null_bookmark++;
-			}
-			total_bits_supplement++;
-			total_bits += (total_bits_supplement * 8);
+			//Delete file if empty.
+			if(total_bits == 0) {remove(path_to_file); continue;}
 			
-			//Creates file "metadata" (# of bits.)
+			//Creates file "metadata".
 			out_stream.open("temp/metadata");
-			long long place = 10;
-			for(int a = 0; a < 7; a++)
-			{	if(total_bits < place) {out_stream << "0";}
-				place *= 10;
-			}
-			out_stream << total_bits;
+			long long temp = total_bits; for(int a = 0; a < 4; a++) {out_stream.put(temp % 256); temp /= 256;} //Writes the number of bits in the file to be sent. Always writes 4 bytes. For example, if file to be sent is 3 bytes, then bytes in file "metadata" are 24,0,0,0. In binary, that's 00011000000000000000000000000000. Now flip it horizontally, that's 24. 00000000000000000000000000011000
 			out_stream.close();
 			
-			//Compresses file "metadata" in half via custom hex. (Hex-to-Bin here.)
-			in_stream.open("temp/metadata");
-			out_stream.open("temp/send_metadata_compressed");
-			in_stream.get(garbage_byte);
-			for(; in_stream.eof() == false;)
-			{	int temp_file_byte_normal = garbage_byte; //..........Converts file byte to int (0 to 255.)
-				if(temp_file_byte_normal < 0) {temp_file_byte_normal += 256;}
-				
-				if     (temp_file_byte_normal < 58) {temp_file_byte_normal -= 48;} //..........0-9
-				else if(temp_file_byte_normal < 85) {temp_file_byte_normal -= 72;} //..........RST
-				else                                {temp_file_byte_normal -= 75;} //..........XYZ
-				int first_nibble = temp_file_byte_normal;
-				
-				in_stream.get(garbage_byte);
-				temp_file_byte_normal = garbage_byte; //..........Converts its pair byte to int (0 to 255.)
-				if(temp_file_byte_normal < 0) {temp_file_byte_normal += 256;}
-				
-				if     (temp_file_byte_normal < 58) {temp_file_byte_normal -= 48;} //..........0-9
-				else if(temp_file_byte_normal < 85) {temp_file_byte_normal -= 72;} //..........RST
-				else                                {temp_file_byte_normal -= 75;} //..........XYZ
-				int second_nibble = temp_file_byte_normal;
-				
-				bool binary[8] = {0}; //..........Converts first nibble to bin.
-				int place_value = 128;
-				for(int a = 0; a < 8; a++)
-				{	if(first_nibble >= place_value)
-					{	binary[a] = 1;
-						first_nibble -= place_value;
-					}
-					place_value /= 2;
-				}
-				
-				bool binary_first_nibble_copy[8]; for(int a = 0; a < 8; a++) {binary_first_nibble_copy[a] = binary[a];}
-				for(int a = 0; a < 8; a++) {binary[a] = 0;} //..........Converts second nibble to bin.
-				place_value = 128;
-				for(int a = 0; a < 8; a++)
-				{	if(second_nibble >= place_value)
-					{	binary[a] = 1;
-						second_nibble -= place_value;
-					}
-					place_value /= 2;
-				}
-				for(int a = 0; a < 4; a++) {binary[a] = binary_first_nibble_copy[a + 4];}
-				
-				int extracted_byte = 0; //..........Converts from 8 binary bits to int.
-				place_value = 128;
-				for(int a = 0; a < 8; a++)
-				{	if(binary[a] == 1) {extracted_byte += place_value;}
-					
-					place_value /= 2;
-				}
-				
-				if(extracted_byte < 128) {out_stream.put(extracted_byte      );} //..........Writes byte to file.
-				else                     {out_stream.put(extracted_byte - 256);}
-				
-				in_stream.get(garbage_byte);
-			}
-			in_stream.close();
-			out_stream.close();
-			
-			//Creates file "send_file" (concatenates file name with file substance.)
-			out_stream.open("temp/send_file");
-			path_to_file_null_bookmark = 5;
-			for(; path_to_file[path_to_file_null_bookmark] != '\0';) {out_stream << path_to_file[path_to_file_null_bookmark]; path_to_file_null_bookmark++;}
-			out_stream << "\n";
-			out_stream.close();
-			
-			in_stream.open(path_to_file);
-			out_stream.open("temp/send_file", ios::app);
-			in_stream.get(garbage_byte);
-			for(; in_stream.eof() == false;) {out_stream.put(garbage_byte); in_stream.get(garbage_byte);}
-			in_stream.close();
-			out_stream.close();
-			
-			//Gets file size of "send_metadata_compressed" in bits.
-			total_bits = 0;
-			in_stream.open("temp/send_metadata_compressed");
-			in_stream.get(garbage_byte);
-			for(; in_stream.eof() == false;)
-			{	in_stream.get(garbage_byte);
-				total_bits++;
-			}
-			total_bits *= 8;
-			in_stream.close();
-			
-			//Sends file "send_metadata_compressed".
+			//Sends file "metadata".
 			system("clear"); system("clear");
 			for(int a = 0; a < 10; a++) //..........Rolls blank.
 			{	cout << "\n\n\n";
@@ -272,21 +103,21 @@ int main()
 			system(time_consumption);
 			
 			long long bit_count = 1;
-			int  temp_file_byte_normal;
-			in_stream.open("temp/send_metadata_compressed");
-			in_stream.get(garbage_byte);
+			long long metadata_total_bits = 32;
+			in_stream.open("temp/metadata");
+			in_stream.get(file_byte);
 			for(; in_stream.eof() == false;)
 			{	//..........Converts file byte to (0 to 255.)
-				temp_file_byte_normal = garbage_byte;
-				if(temp_file_byte_normal < 0) {temp_file_byte_normal += 256;}
+				raw_byte = file_byte;
+				if(raw_byte < 0) {raw_byte += 256;}
 				
 				//..........Converts file byte to binary of 00000000 to 11111111.
 				bool binary[8] = {0};
 				int place_value = 128;
 				for(int a = 0; a < 8; a++)
-				{	if(temp_file_byte_normal >= place_value)
+				{	if(raw_byte >= place_value)
 					{	binary[a] = 1;
-						temp_file_byte_normal -= place_value;
+						raw_byte -= place_value;
 					}
 					
 					place_value /= 2;
@@ -295,21 +126,21 @@ int main()
 				//..........Writes 1 byte to file based on binary[].
 				for(int bit = 0; bit < 8; bit++)
 				{	if(binary[bit] == 0)
-					{	cout << "                                   ███████          " << bit_count << " of " << total_bits << "\n"
-						     << "                                   ███████          " << bit_count << " of " << total_bits << "\n"
-						     << "                                   ███████          " << bit_count << " of " << total_bits << "\n";
+					{	cout << "                                   ███████          " << bit_count << " of " << metadata_total_bits << "\n"
+						     << "                                   ███████          " << bit_count << " of " << metadata_total_bits << "\n"
+						     << "                                   ███████          " << bit_count << " of " << metadata_total_bits << "\n";
 						system(time_consumption);
 					}
 					else
-					{	cout << "          ███████                                   " << bit_count << " of " << total_bits << "\n"
-						     << "          ███████                                   " << bit_count << " of " << total_bits << "\n"
-						     << "          ███████                                   " << bit_count << " of " << total_bits << "\n";
+					{	cout << "          ███████                                   " << bit_count << " of " << metadata_total_bits << "\n"
+						     << "          ███████                                   " << bit_count << " of " << metadata_total_bits << "\n"
+						     << "          ███████                                   " << bit_count << " of " << metadata_total_bits << "\n";
 						system(time_consumption);
 					}
 					
 					//..........Blank
-					if(bit_count < total_bits)
-					{	for(int a = 0; a < 3; a++) {cout << "                                                    " << bit_count << " of " << total_bits << "\n";}
+					if(bit_count < metadata_total_bits)
+					{	for(int a = 0; a < 3; a++) {cout << "                                                    " << bit_count << " of " << metadata_total_bits << "\n";}
 						system(time_consumption);
 					}
 					else {cout << "\n\n\n"; system(time_consumption);}
@@ -317,7 +148,7 @@ int main()
 					bit_count++;
 				}
 				
-				in_stream.get(garbage_byte);
+				in_stream.get(file_byte);
 			}
 			in_stream.close();
 			
@@ -326,35 +157,22 @@ int main()
 				system(time_consumption);
 			}
 			
-			//Gets file size of "send_file" in bits.
-			total_bits = 0;
-			long long total_bits_copy;
-			in_stream.open("temp/send_file");
-			in_stream.get(garbage_byte);
-			for(; in_stream.eof() == false;)
-			{	in_stream.get(garbage_byte);
-				total_bits++;
-			}
-			total_bits *= 8;
-			total_bits_copy = total_bits;
-			in_stream.close();
-			
-			//Sends file "send_file".
+			//Sends file.
 			bit_count = 1;
-			in_stream.open("temp/send_file");
-			in_stream.get(garbage_byte);
+			in_stream.open(path_to_file);
+			in_stream.get(file_byte);
 			for(; in_stream.eof() == false;)
 			{	//..........Converts file byte to (0 to 255.)
-				temp_file_byte_normal = garbage_byte;
-				if(temp_file_byte_normal < 0) {temp_file_byte_normal += 256;}
+				raw_byte = file_byte;
+				if(raw_byte < 0) {raw_byte += 256;}
 				
 				//..........Converts file byte to binary of 00000000 to 11111111.
 				bool binary[8] = {0};
 				int place_value = 128;
 				for(int a = 0; a < 8; a++)
-				{	if(temp_file_byte_normal >= place_value)
+				{	if(raw_byte >= place_value)
 					{	binary[a] = 1;
-						temp_file_byte_normal -= place_value;
+						raw_byte -= place_value;
 					}
 					
 					place_value /= 2;
@@ -385,7 +203,7 @@ int main()
 					bit_count++;
 				}
 				
-				in_stream.get(garbage_byte);
+				in_stream.get(file_byte);
 			}
 			in_stream.close();
 			
@@ -396,7 +214,7 @@ int main()
 			
 			//Done, next.
 			remove(path_to_file);
-			if(total_bits_copy > 16000000) {system("sleep 10");}
+			if(total_bits > 16000000) {system("sleep 10");}
 			files_sent++;
 		}
 	}
@@ -407,263 +225,145 @@ int main()
 	
 	//______________________________________________________Receive___________________________________________________//
 	if(user_option == 'n')
-	{	//First received: 33-bit header, of which first bit is '0' (right eye blinks.) This way, keyboard
-		//keys used by the photoresistors are "binary." This header is # of bits to expect next:
-		//Each file is a concatenation of its name + substance, separated by '\n'.
-		
-		system("mkdir temp           -p");
+	{	system("mkdir temp           -p");
 		system("mkdir Saved_as_files -p");
 		out_stream.open("Saved_as_text", ios::app); out_stream.close();
 		
 		//A bash file is created, its permissions set, and is called upon by this C++.
 		//This is done because "read -n" is a broken option on KDE using Geany???!!!
-		out_stream.open("temp/bash.txt");
-		out_stream << "#!/bin/bash\n"                 ; //..........Bash header.
-		out_stream << "read -n 00000033 var\n"        ; //..........Automatically presses return after n char entered in terminal.
-		out_stream << "echo \"$var\" > temp/entered\n"; //..........Writes entire entered string (33-bit metadata) to file "entered".
+		out_stream.open("temp/bash_to_get_metadata.txt");
+		out_stream << "#!/bin/bash\n"                           ; //..........Bash header.
+		out_stream << "read -n 33 var\n"                        ; //..........Automatically presses return after 33 char entered in terminal.
+		out_stream << "echo \"$var\" > temp/received_metadata\n"; //..........Writes entire entered string (33-bit metadata) to file "received_metadata".
 		out_stream.close();
-		system("chmod 0777 temp/bash.txt");
+		system("chmod 0777 temp/bash_to_get_metadata.txt");
 		
-		char garbage_byte;
 		for(long long files_saved = 0;;)
 		{	system("clear"); system("clear");
 			cout << "\n" << files_saved << " saved...\n\n";
 			
-			//Reads 33-bit header from keyboard.
-			system("./temp/bash.txt"); cout << "   (33-bit header)\n\n";
+			//Reads 33 keys from keyboard.
+			//First bit is always '0' (right eye blinks so we know which keyboard character
+			//is 1 and which is 0.) This header is # of keyboard characters to expect next.
+			system("./temp/bash_to_get_metadata.txt"); cout << "   (33-bit header)\n\n";
 			
 			//Infers which keyboard key is bit '0'.
 			char keyboard_key_representing_bit_0;
-			in_stream.open("temp/entered");
-			in_stream.get(garbage_byte);
-			keyboard_key_representing_bit_0 = garbage_byte;
+			in_stream.open("temp/received_metadata");
+			in_stream.get(file_byte);
+			keyboard_key_representing_bit_0 = file_byte;
 			in_stream.close();
 			
-			//Creates file "metadata_binary_text" from file "entered". (Keyboard keys to binary-text.)
-			in_stream.open("temp/entered");
-			out_stream.open("temp/metadata_binary_text");
-			in_stream.get(garbage_byte); //..........Skips header header.
-			in_stream.get(garbage_byte);
-			for(int a = 0; a < 32; a++)
-			{	if(garbage_byte == keyboard_key_representing_bit_0) {out_stream << "0";}
-				else                                                {out_stream << "1";}
-				
-				in_stream.get(garbage_byte);
-			}
-			in_stream.close();
-			out_stream.close();
-			
-			//Creates file "metadata_binary". (Binary text to binary.)
-			in_stream.open("temp/metadata_binary_text");
-			out_stream.open("temp/metadata_binary");
-			in_stream.get(garbage_byte);
-			for(; in_stream.eof() == false;)
-			{	bool binary[8] = {0}; //..........Grabs 8 text-bits.
+			//Creates file "metadata".
+			in_stream.open("temp/received_metadata");
+			out_stream.open("temp/metadata");
+			in_stream.get(file_byte); //Skips first byte. !!!IMPORTANT!!!
+			for(int loop = 0; loop < 4; loop++)
+			{	bool binary[8] = {0}; //..........Grabs 8 bytes, they represent 8 bits.
 				for(int a = 0; a < 8; a++)
-				{	if(garbage_byte == '0') {binary[a] = 0;}
-					else                    {binary[a] = 1;}
-					
-					in_stream.get(garbage_byte);
+				{	in_stream.get(file_byte);
+					if(file_byte == keyboard_key_representing_bit_0) {binary[a] = 0;}
+					else                                             {binary[a] = 1;}
 				}
 				
-				int extracted_byte = 0; //..........Converts from 8 binary bits to an integer.
+				raw_byte = 0; //..........Converts 8 bits to integer.
 				int place_value = 128;
 				for(int a = 0; a < 8; a++)
-				{	if(binary[a] == 1) {extracted_byte += place_value;}
-					
+				{	if(binary[a] == 1) {raw_byte += place_value;}
 					place_value /= 2;
 				}
 				
-				if(extracted_byte < 128) {out_stream.put(extracted_byte      );} //..........Writes byte to file.
-				else                     {out_stream.put(extracted_byte - 256);}
+				if(raw_byte < 128) {out_stream.put(raw_byte      );} //..........Writes byte to file.
+				else               {out_stream.put(raw_byte - 256);}
 			}
 			in_stream.close();
 			out_stream.close();
 			
-			//Decompresses metadata from file "entered". (Bin-to-hex here.)
-			in_stream.open("temp/metadata_binary");
-			out_stream.open("temp/metadata_decompressed");
-			in_stream.get(garbage_byte);
-			for(int md = 0; md < 4; md++)
-			{	int temp_file_byte_normal = garbage_byte; //..........Converts file byte to int (0 to 255.)
-				if(temp_file_byte_normal < 0) {temp_file_byte_normal += 256;}
-				
-				bool binary[8] = {0}; //..........Converts file byte to bin.
-				int place_value = 128;
-				for(int a = 0; a < 8; a++)
-				{	if(temp_file_byte_normal >= place_value)
-					{	binary[a] = 1;
-						temp_file_byte_normal -= place_value;
-					}
-					place_value /= 2;
-				}
-				
-				int first_nibble = 0; //..........Converts first 4 bits to int.
-				place_value = 8;
-				for(int a = 0; a < 4; a++)
-				{	if(binary[a] == 1) {first_nibble += place_value;}
-					place_value /= 2;
-				}
-				
-				int second_nibble = 0; //..........Converts last 4 bits to int.
-				place_value = 8;
-				for(int a = 4; a < 8; a++)
-				{	if(binary[a] == 1) {second_nibble += place_value;}
-					place_value /= 2;
-				}
-				
-				if     (first_nibble < 10) {first_nibble += 48;} //..........0-9
-				else if(first_nibble < 13) {first_nibble += 72;} //..........RST
-				else                       {first_nibble += 75;} //..........XYZ
-				
-				if(first_nibble < 128)  {out_stream.put(first_nibble       );} //..........Writes hex byte to file.
-				else                    {out_stream.put(first_nibble  - 256);}
-				
-				if     (second_nibble < 10) {second_nibble += 48;} //..........0-9
-				else if(second_nibble < 13) {second_nibble += 72;} //..........RST
-				else                        {second_nibble += 75;} //..........XYZ
-				
-				if(second_nibble < 128) {out_stream.put(second_nibble      );} //..........Writes hex byte to file.
-				else                    {out_stream.put(second_nibble - 256);}
-				
-				in_stream.get(garbage_byte);
-			}
+			//Reads file "metadata".
+			long long bits_to_receive = 0;
+			in_stream.open("temp/metadata");
+			long long table[4]; for(int a = 0; a < 4; a++) {in_stream.get(file_byte); raw_byte = file_byte; if(raw_byte < 0) {raw_byte += 256;} table[a] = raw_byte;}
 			in_stream.close();
-			out_stream.close();
+			bits_to_receive += (table[0] *        1);
+			bits_to_receive += (table[1] *      256);
+			bits_to_receive += (table[2] *    65536);
+			bits_to_receive += (table[3] * 16777216);
 			
-			//Creates new file "bash_dynamic.txt" with n keyboard keys to read. (n comes from file "metadata_decompressed".)
+			//Creates new file "bash_to_get_file.txt" with n keyboard keys to read. (n comes from file "metadata".)
 			//A bash file is created, its permissions set, and is called upon by this C++.
 			//This is done because "read -n" is a broken option on KDE using Geany???!!!
-			in_stream.open("temp/metadata_decompressed");
-			out_stream.open("temp/bash_dynamic.txt");
-			out_stream << "#!/bin/bash\n"                      ; //..........Bash header.
-			out_stream << "read -n "                           ;
-			
-			for(int a = 0; a < 8; a++) {in_stream.get(garbage_byte); out_stream << garbage_byte;}
-			
-			out_stream << " var\n"                             ; //..........Automatically presses return after n char entered in terminal.
-			out_stream << "echo \"$var\" > temp/entered_file\n"; //..........Writes entire entered string (file name + file substance) to file "entered_file".
-			in_stream.close();
+			out_stream.open("temp/bash_to_get_file.txt");
+			out_stream << "#!/bin/bash\n"                          ; //..........Bash header.
+			out_stream << "read -n " << bits_to_receive << " var\n"; //..........Automatically presses return after n char entered in terminal.
+			out_stream << "echo \"$var\" > temp/received_file\n"   ; //..........Writes entire entered string (file substance) to file "received_file".
 			out_stream.close();
-			system("chmod 0777 temp/bash_dynamic.txt");
+			system("chmod 0777 temp/bash_to_get_file.txt");
 			
-			//Reads n-key file from keyboard.
-			system("./temp/bash_dynamic.txt");
+			//Reads n keys from keyboard.
+			system("./temp/bash_to_get_file.txt");
 			
-			//Gets file size of "entered_file" without the '\n' at the end.
-			int total_bytes = 0;
-			in_stream.open("temp/entered_file");
-			in_stream.get(garbage_byte);
-			for(; in_stream.eof() == false;)
-			{	in_stream.get(garbage_byte);
-				total_bytes++;
-			}
-			in_stream.close();
-			
-			total_bytes--;
-			total_bytes /= 8;
-			
-			//Creates file "extracted_file" from file "entered_file".
-			in_stream.open("temp/entered_file");
-			out_stream.open("temp/extracted_file");
-			in_stream.get(garbage_byte);
-			for(int substance = 0; substance < total_bytes; substance++)
-			{	bool binary[8] = {0}; //..........Grabs 8 text-bits.
+			//Creates file "file".
+			in_stream.open("temp/received_file");
+			out_stream.open("temp/file");
+			for(int loop = 0; loop < (bits_to_receive / 8); loop++)
+			{	bool binary[8] = {0}; //..........Grabs 8 bytes, they represent 8 bits.
 				for(int a = 0; a < 8; a++)
-				{	if(garbage_byte == keyboard_key_representing_bit_0) {binary[a] = 0;}
-					else                                                {binary[a] = 1;}
-					
-					in_stream.get(garbage_byte);
+				{	in_stream.get(file_byte);
+					if(file_byte == keyboard_key_representing_bit_0) {binary[a] = 0;}
+					else                                             {binary[a] = 1;}
 				}
 				
-				int extracted_byte = 0; //..........Converts from 8 binary bits to an integer.
+				raw_byte = 0; //..........Converts 8 bits to integer.
 				int place_value = 128;
 				for(int a = 0; a < 8; a++)
-				{	if(binary[a] == 1) {extracted_byte += place_value;}
-					
+				{	if(binary[a] == 1) {raw_byte += place_value;}
 					place_value /= 2;
 				}
 				
-				if(extracted_byte < 128) {out_stream.put(extracted_byte      );} //..........Writes byte to file.
-				else                     {out_stream.put(extracted_byte - 256);}
+				if(raw_byte < 128) {out_stream.put(raw_byte      );} //..........Writes byte to file.
+				else               {out_stream.put(raw_byte - 256);}
 			}
 			in_stream.close();
 			out_stream.close();
 			
-			//Makes proper file name for saving substance from file "extracted_file" to folder "Saved_as_files".
-			char path_to_Saved_as_files[10000] = {"Saved_as_files/"}; //Appended: "2024-01-30_02:04:17___Tue_Jan_30_02:04:17_AM_MST_2024___your-file-name".
-			int path_to_Saved_as_files_null_bookmark = 15;
-			
-			system("date --rfc-3339=seconds > temp/last_time");
-			in_stream.open("temp/last_time");
-			for(int a = 0; a < 19; a++)
-			{	in_stream.get(garbage_byte);
-				if(garbage_byte == 32) {path_to_Saved_as_files[path_to_Saved_as_files_null_bookmark] = '_'         ;}
-				else                   {path_to_Saved_as_files[path_to_Saved_as_files_null_bookmark] = garbage_byte;}
-				path_to_Saved_as_files_null_bookmark++;
-			}
+			//Makes file name, such as "2025-10-19_20:34:55___Sun_Oct_19_08:34:55_PM_MDT_2025".
+			//BTW, such a date precedes each line in file "Saved_as_text".
+			system("date --rfc-3339=seconds > temp/military_time");
+			in_stream.open("temp/military_time");
+			char military_time[20] = {'\0'}; for(int a = 0; a < 19; a++) {in_stream.get(military_time[a]);}
 			in_stream.close();
+			military_time[10] = '_';
 			
-			path_to_Saved_as_files[path_to_Saved_as_files_null_bookmark    ] = '_';
-			path_to_Saved_as_files[path_to_Saved_as_files_null_bookmark + 1] = '_';
-			path_to_Saved_as_files[path_to_Saved_as_files_null_bookmark + 2] = '_';
-			path_to_Saved_as_files_null_bookmark += 3;
-			
-			system("date > temp/last_time");
-			in_stream.open("temp/last_time");
-			for(int a = 0; a < 31; a++)
-			{	in_stream.get(garbage_byte);
-				if(garbage_byte == 32) {path_to_Saved_as_files[path_to_Saved_as_files_null_bookmark] = '_'         ;}
-				else                   {path_to_Saved_as_files[path_to_Saved_as_files_null_bookmark] = garbage_byte;}
-				path_to_Saved_as_files_null_bookmark++;
-			}
+			system("date > temp/time");
+			in_stream.open("temp/time");
+			char time[32] = {'\0'}; for(int a = 0; a < 31; a++) {in_stream.get(time[a]);}
 			in_stream.close();
+			for(int a = 0; a < 31; a++) {if(time[a] == ' ') {time[a] = '_';}}
 			
-			path_to_Saved_as_files[path_to_Saved_as_files_null_bookmark    ] = '_';
-			path_to_Saved_as_files[path_to_Saved_as_files_null_bookmark + 1] = '_';
-			path_to_Saved_as_files[path_to_Saved_as_files_null_bookmark + 2] = '_';
-			path_to_Saved_as_files_null_bookmark += 3;
+			string str = "Saved_as_files/"; str += military_time; str += "___"; str += time;
 			
-			in_stream.open("temp/extracted_file");
-			in_stream.get(garbage_byte);
-			int name_length = 0;
-			for(; garbage_byte != '\n';)
-			{	path_to_Saved_as_files[path_to_Saved_as_files_null_bookmark] = garbage_byte;
-				path_to_Saved_as_files_null_bookmark++;
-				name_length++;
-				in_stream.get(garbage_byte);
-			}
-			in_stream.close();
-			name_length++; //..........To skips file name + '\n'.
-			
-			//Saves substance from file "extracted_file" to folder "Saved_as_files".
-			in_stream.open("temp/extracted_file");
-			out_stream.open(path_to_Saved_as_files);
-			for(int a = 0; a < name_length; a++) {in_stream.get(garbage_byte);}
-			in_stream.get(garbage_byte);
-			for(; in_stream.eof() == false;) {out_stream.put(garbage_byte); in_stream.get(garbage_byte);}
+			//Copies file to folder "Saved_as_files".
+			in_stream.open("temp/file");
+			out_stream.open(str);
+			in_stream.get(file_byte);
+			for(; in_stream.eof() == false;) {out_stream.put(file_byte); in_stream.get(file_byte);}
 			in_stream.close();
 			out_stream.close();
 			
-			//Saves substance from file "extracted_file" to file "Saved_as_text" where each line is dated.
-			in_stream.open("temp/extracted_file");
+			//Copies file to file "Saved_as_text".
+			in_stream.open("temp/file");
 			out_stream.open("Saved_as_text", ios::app);
-			for(int a = 15; path_to_Saved_as_files[a] != '\0'; a++) //..........Just for date.
-			{	out_stream << path_to_Saved_as_files[a];
-			}
-			out_stream << "___";
+			str = military_time; str += "___"; str += time; str += "___"; out_stream << str;
 			
-			for(int a = 0; a < name_length; a++) {in_stream.get(garbage_byte);}
-			in_stream.get(garbage_byte);
+			in_stream.get(file_byte);
 			for(; in_stream.eof() == false;)
-			{	if     ( garbage_byte ==   9)  {out_stream << " \\t "     ;}
-				else if( garbage_byte ==  10)  {out_stream << " \\n "     ;}
-				else if( garbage_byte ==  13)  {out_stream << " \\r "     ;}
-				else if((garbage_byte  >  31)
-				     && (garbage_byte  < 127)) {out_stream << garbage_byte;}
-				else                           {                           }
+			{	if     ( file_byte ==   9)  {out_stream << " \\t ";  }
+				else if( file_byte ==  10)  {out_stream << " \\n ";  }
+				else if( file_byte ==  13)  {out_stream << " \\r ";  }
+				else if((file_byte  >  31)
+				     && (file_byte  < 127)) {out_stream << file_byte;}
 				
-				in_stream.get(garbage_byte);
+				in_stream.get(file_byte);
 			}
 			out_stream << "\n";
 			in_stream.close();
