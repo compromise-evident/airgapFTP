@@ -334,13 +334,13 @@ int main()
 			in_stream.close();
 			military_time[10] = '_';
 			
-			system("date > temp/time");
-			in_stream.open("temp/time");
-			char time[32] = {'\0'}; for(int a = 0; a < 31; a++) {in_stream.get(time[a]);}
+			system("date > temp/civilian_time");
+			in_stream.open("temp/civilian_time");
+			char civilian_time[32] = {'\0'}; for(int a = 0; a < 31; a++) {in_stream.get(civilian_time[a]);}
 			in_stream.close();
-			for(int a = 0; a < 31; a++) {if(time[a] == ' ') {time[a] = '_';}}
+			for(int a = 0; a < 31; a++) {if(civilian_time[a] == ' ') {civilian_time[a] = '_';}}
 			
-			string str = "Saved_as_files/"; str += military_time; str += "___"; str += time;
+			string str = "Saved_as_files/"; str += military_time; str += "___"; str += civilian_time;
 			
 			//Copies file to folder "Saved_as_files".
 			in_stream.open("temp/file");
@@ -353,7 +353,7 @@ int main()
 			//Copies file to file "Saved_as_text".
 			in_stream.open("temp/file");
 			out_stream.open("Saved_as_text", ios::app);
-			str = military_time; str += "___"; str += time; str += "___"; out_stream << str;
+			str = military_time; str += "___"; str += civilian_time; str += "___"; out_stream << str;
 			
 			in_stream.get(file_byte);
 			for(; in_stream.eof() == false;)
