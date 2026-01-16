@@ -1,7 +1,7 @@
 //YOUR CONTROLS:                                                                Run it: "apt install g++ geany". Open the .cpp in Geany. Hit F9 once. F5 to run.
 char time_consumption[] = {"sleep 0.056"}; //Smaller = faster boxes.
 
-/*Version 3.0.0 - Fully automated airgap FTP at 1B/s using keyboard
+/*Version 3.0.1 - Fully automated airgap FTP at 1B/s using keyboard
 guts & photoresistors. Keep dropping files in folder "Send". */
 
 /*Max file size to send: 4,294,967,295 bits.
@@ -326,25 +326,22 @@ int main()
 			in_stream.close();
 			out_stream.close();
 			
-			//Makes file name, such as "2025-10-19_20:34:55___Sun_Oct_19_08:34:55_PM_MDT_2025".
-			//BTW, such a date precedes each line in file "Saved_as_text".
+			//Gets military time.
 			system("date --rfc-3339=seconds > temp/military_time");
-			in_stream.open("temp/military_time");
-			char military_time[20] = {'\0'}; for(int a = 0; a < 19; a++) {in_stream.get(military_time[a]);}
-			in_stream.close();
-			military_time[10] = '_';
+			in_stream.open("temp/military_time"); char military_time[50] = {'\0'}; in_stream.getline(military_time, 50); in_stream.close();
+			military_time[10] = '_'; military_time[19] = '\0';
 			
+			//Gets civilian time.
 			system("date > temp/civilian_time");
-			in_stream.open("temp/civilian_time");
-			char civilian_time[32] = {'\0'}; for(int a = 0; a < 31; a++) {in_stream.get(civilian_time[a]);}
-			in_stream.close();
-			for(int a = 0; a < 31; a++) {if(civilian_time[a] == ' ') {civilian_time[a] = '_';}}
+			in_stream.open("temp/civilian_time"); char civilian_time[50] = {'\0'}; in_stream.getline(civilian_time, 50); in_stream.close();
+			for(int a = 0; a < 50; a++) {if(civilian_time[a] == ' ') {civilian_time[a] = '_';}}
 			
-			string str = "Saved_as_files/"; str += military_time; str += "___"; str += civilian_time;
+			//Makes a file name like "Saved_as_files/2026-01-15_18:03:14___Thu_Jan_15_06:03:14_PM_MST_2026".
+			string temporal_name = "Saved_as_files/"; temporal_name += military_time; temporal_name += "___"; temporal_name += civilian_time;
 			
 			//Copies file to folder "Saved_as_files".
 			in_stream.open("temp/file");
-			out_stream.open(str);
+			out_stream.open(temporal_name);
 			in_stream.get(file_byte);
 			for(; in_stream.eof() == false;) {out_stream.put(file_byte); in_stream.get(file_byte);}
 			in_stream.close();
@@ -353,7 +350,7 @@ int main()
 			//Copies file to file "Saved_as_text".
 			in_stream.open("temp/file");
 			out_stream.open("Saved_as_text", ios::app);
-			str = military_time; str += "___"; str += civilian_time; str += "___"; out_stream << str;
+			out_stream << military_time; out_stream << "___"; out_stream << civilian_time; out_stream << "___";
 			
 			in_stream.get(file_byte);
 			for(; in_stream.eof() == false;)
