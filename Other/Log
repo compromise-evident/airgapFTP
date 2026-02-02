@@ -3,6 +3,7 @@ airgapFTP
 
 
 Version 3.0.1   Allows variable-length time zones (civilian_time).
+                2026_01_16
 
 Version 3.0.0   Refactored, minimalist.  Some features added,  and some removed.
                 Oct 19 2025
