@@ -78,9 +78,22 @@ If you own a modern thousand-dollar laptop, this won't work; your mic line is al
 <br>
 <br>
 
+# Or via truly-instant-NAS (no systemd)
+
+* **Your computer**<br>
+Paste this command to Startup apps, restart:<br>
+`sh -c "python3 -m http.server 8000 -d ~/Public"`
+
+* **NAS computer**<br>
+Paste this command to Startup apps, replace "hostname" with the hostname of YOUR computer, restart:<br>
+`sh -c "while :; do wget -m -np -N -R 'index.html*' hostname.local:8000/; sleep 10; done"`
+
+<br>
+<br>
+
 # Send files to sending machine via local network.
 
-* Sending machine should have Gnome.
+* Sending machine should have the Gnome desktop environment, unfortunately.
   Go to Settings, Sharing. Enable sharing, then enable
   "File Sharing" without password. This creates a "Public"
   folder in /home/user/ if missing.
