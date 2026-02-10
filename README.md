@@ -78,7 +78,7 @@ If you own a modern thousand-dollar laptop, this won't work; your mic line is al
 <br>
 <br>
 
-# Or via truly-instant-NAS (no systemd)
+# Or truly-instant-NAS (no systemd)
 
 * **Your computer**<br>
 Paste this command to Startup apps, restart:<br>
