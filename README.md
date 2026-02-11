@@ -82,11 +82,15 @@ If you own a modern thousand-dollar laptop, this won't work; your mic line is al
 
 * **Your computer**<br>
 Paste this command to Startup apps, restart:<br>
-`sh -c "python3 -m http.server 8000 -d ~/Public"`
+`
+sh -c "python3 -m http.server 8000 -d ~/Public"
+`
 
 * **NAS computer**<br>
 Paste this command to Startup apps, replace "hostname" with the hostname of YOUR computer, restart:<br>
-`sh -c "while :; do wget -m -np -N -R 'index.html*' hostname.local:8000/; sleep 10; done"`
+`
+sh -c "while :; do wget -m -np -N -R 'index.html*' hostname.local:8000/; sleep 10; done"
+`
 
 <br>
 <br>
