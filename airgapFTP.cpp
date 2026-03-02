@@ -229,10 +229,10 @@ int main()
 		system("mkdir Saved_as_files -p");
 		out_stream.open("Saved_as_text", ios::app); out_stream.close();
 		
-		//A bash file is created, its permissions set, and is called upon by this C++.
+		//A Shell script is created, its permissions set, and is called upon by this C++.
 		//This is done because "read -n" is a broken option on KDE using Geany???!!!
 		out_stream.open("temp/bash_to_get_metadata.txt");
-		out_stream << "#!/bin/bash\n"                           ; //..........Bash header.
+		out_stream << "#!/usr/bin/env bash\n"                   ; //..........Portable shebang.
 		out_stream << "read -n 33 var\n"                        ; //..........Automatically presses return after 33 char entered in terminal.
 		out_stream << "echo \"$var\" > temp/received_metadata\n"; //..........Writes entire entered string (33-bit metadata) to file "received_metadata".
 		out_stream.close();
@@ -290,10 +290,10 @@ int main()
 			bits_to_receive += (table[3] * 16777216);
 			
 			//Creates new file "bash_to_get_file.txt" with n keyboard keys to read. (n comes from file "metadata".)
-			//A bash file is created, its permissions set, and is called upon by this C++.
+			//A Shell script is created, its permissions set, and is called upon by this C++.
 			//This is done because "read -n" is a broken option on KDE using Geany???!!!
 			out_stream.open("temp/bash_to_get_file.txt");
-			out_stream << "#!/bin/bash\n"                          ; //..........Bash header.
+			out_stream << "#!/usr/bin/env bash\n"                  ; //..........Portable shebang.
 			out_stream << "read -n " << bits_to_receive << " var\n"; //..........Automatically presses return after n char entered in terminal.
 			out_stream << "echo \"$var\" > temp/received_file\n"   ; //..........Writes entire entered string (file substance) to file "received_file".
 			out_stream.close();
