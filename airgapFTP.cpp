@@ -1,10 +1,13 @@
 //YOUR CONTROLS:                                                                Run it: "apt install g++ geany". Open the .cpp in Geany. Hit F9 once. F5 to run.
 char time_consumption[] = {"sleep 0.056"}; //Smaller = faster boxes.
 
-/*Version 3.0.1 - Fully automated airgap FTP at 1B/s using keyboard
-guts & photoresistors. Keep dropping files in folder "Send". */
 
-/*Max file size to send: 4,294,967,295 bits.
+
+/*Version 3.0.2
+Fully automated airgap FTP at 1B/s using keyboard guts
+& photoresistors. Keep dropping files in folder "Send".
+
+Max file size to send: 4,294,967,295 bits.
 Empty files will be ignored and deleted.
 All files will be renamed, for example:
 "2025-10-19_20:34:55___Sun_Oct_19_08:34:55_PM_MDT_2025"
@@ -12,6 +15,7 @@ This same date precedes each line in "Saved_as_text". */
 
 #include <fstream>
 #include <iostream>
+#include <string>
 using namespace std;
 int main()
 {	int raw_byte;
@@ -19,7 +23,7 @@ int main()
 	ifstream in_stream;
 	ofstream out_stream;
 	
-	system("clear"); system("clear");
+	std::cout << "\033[2J\033[3J\033[1;1H"; //Clears screen, erasing history.
 	cout << "\n"
 	     << "        ███████████              ███████████\n"
 	     << "        ██       ██              ██       ██\n"
@@ -48,7 +52,7 @@ int main()
 		system("mkdir temp -p");
 		
 		for(long long files_sent = 0;;)
-		{	system("clear"); system("clear");
+		{	std::cout << "\033[2J\033[3J\033[1;1H"; //Clears screen, erasing history.
 			cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n" << files_sent << " sent. Keep dropping files in folder \"Send\"...\n";
 			
 			//Waits for files in folder "Send".
@@ -89,7 +93,7 @@ int main()
 			out_stream.close();
 			
 			//Sends file "metadata".
-			system("clear"); system("clear");
+			std::cout << "\033[2J\033[3J\033[1;1H"; //Clears screen, erasing history.
 			for(int a = 0; a < 10; a++) //..........Rolls blank.
 			{	cout << "\n\n\n";
 				system(time_consumption);
@@ -239,7 +243,7 @@ int main()
 		system("chmod 0777 temp/bash_to_get_metadata.txt");
 		
 		for(long long files_saved = 0;;)
-		{	system("clear"); system("clear");
+		{	std::cout << "\033[2J\033[3J\033[1;1H"; //Clears screen, erasing history.
 			cout << "\n" << files_saved << " saved...\n\n";
 			
 			//Reads 33 keys from keyboard.
