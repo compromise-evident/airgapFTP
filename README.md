@@ -8,7 +8,7 @@ https://github.com/compromise-evident/airgapFTP/assets/75550631/cabe9cfb-08b6-44
 # :hocho: Gut a keyboard & sand off black coating
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/compromise-evident/airgapFTP/main/Other/Keyboard_guts_5f4a0b228621479a36b128017924c866.png">
+  <img src="docs/keyboard_guts.png">
 </p>
 
 <br>
@@ -17,7 +17,7 @@ https://github.com/compromise-evident/airgapFTP/assets/75550631/cabe9cfb-08b6-44
 # Solder photoresistors to leads who type if shorted
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/compromise-evident/airgapFTP/main/Other/Keyboard_photoresistors_d64aedee67e91108087d5896876716c1.jpg">
+  <img src="docs/keyboard_photoresistors.jpg">
 </p>
 
 <br>
@@ -26,7 +26,7 @@ https://github.com/compromise-evident/airgapFTP/assets/75550631/cabe9cfb-08b6-44
 # Tape photoresistors to eyes of the sending machine
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/compromise-evident/airgapFTP/refs/heads/main/Other/Terminal.png">
+  <img src="docs/terminal.png">
 </p>
 
 <br>
@@ -41,20 +41,20 @@ the LED brightness normalized.) The bottleneck is the LED;
 it cannot become darker fast enough after each flash of light.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/compromise-evident/airgapFTP/main/Other/LED/Close-up.jpeg">
+  <img src="docs/LED/close-up.jpeg">
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/compromise-evident/airgapFTP/main/Other/LED/Materials.jpeg">
+  <img src="docs/LED/materials.jpeg">
 </p>
 
 https://github.com/compromise-evident/airgapFTP/assets/75550631/4a9a4f20-4205-4f49-96c6-10445f4c7c2d
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/compromise-evident/airgapFTP/main/Other/LED/Terminal_36d7579acafa3983936d0f34204d4993.png">
+  <img src="docs/LED/terminal.png">
 </p>
 
-See [LED.cpp](https://github.com/compromise-evident/airgapFTP/blob/main/Other/LED/LED.cpp). (May need to tilt photoresistor away as in video above. Use it in a dark enclosure.) <br>
+See [LED.cpp](https://github.com/compromise-evident/airgapFTP/blob/main/docs/LED/LED.cpp). (May need to tilt photoresistor away as in video above. Use it in a dark enclosure.) <br>
 <sub>*Receiving machine must have audio recording hardware at least like that of the Dell Latitude E5500 (made in 2008.) <br>
 If you own a modern thousand-dollar laptop, this won't work; your mic line is always noisy, even when disabled.<sub/>
 
@@ -64,14 +64,14 @@ If you own a modern thousand-dollar laptop, this won't work; your mic line is al
 # Or 1kB/s (press enter & play wav at the same time)
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/compromise-evident/airgapFTP/main/Other/aux/aux_cord.png">
+  <img src="docs/aux/aux_cord.png">
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/compromise-evident/airgapFTP/main/Other/aux/Terminal_20686babfe4882286b0217374c0c4f45.png">
+  <img src="docs/aux/terminal.png">
 </p>
 
-See [aux.cpp](https://github.com/compromise-evident/airgapFTP/blob/main/Other/aux/aux.cpp) <br>
+See [aux.cpp](https://github.com/compromise-evident/airgapFTP/blob/main/docs/aux/aux.cpp) <br>
 <sub>*Receiving machine must have audio recording hardware at least like that of the Dell Latitude E5500 (made in 2008.) <br>
 If you own a modern thousand-dollar laptop, this won't work; your mic line is always noisy, even when disabled.<sub/>
 
