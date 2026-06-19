@@ -1,38 +1,38 @@
-Run it: ```apt install g++ geany```. Open the .cpp in Geany. Hit F9 once. F5 to run.
+### Run it
+
+```apt install g++ geany```. Open the .cpp in Geany. Hit F9 once. F5 to run.
+
+<br>
 
 https://github.com/compromise-evident/airgapFTP/assets/75550631/cabe9cfb-08b6-44af-8240-1c76162d4c3f
 
 <br>
-<br>
 
-# :hocho: Gut a keyboard & sand off black coating
+### :hocho: Gut a keyboard & sand off black coating
 
 <p align="center">
   <img src="docs/keyboard_guts.png">
 </p>
 
 <br>
-<br>
 
-# Solder photoresistors to leads who type if shorted
+### Solder photoresistors to leads who type if shorted
 
 <p align="center">
   <img src="docs/keyboard_photoresistors.jpg">
 </p>
 
 <br>
-<br>
 
-# Tape photoresistors to eyes of the sending machine
+### Tape photoresistors to eyes of the sending machine
 
 <p align="center">
   <img src="docs/terminal.png">
 </p>
 
 <br>
-<br>
 
-# Or 345B/s (press enter & play wav at the same time)
+### Or 345B/s (press enter & play wav at the same time)
 
 This method proves that modern generic photoresistors are
 sensitive to at least 5,520 adjustments in brightness per second
@@ -59,9 +59,8 @@ See [LED.cpp](https://github.com/compromise-evident/airgapFTP/blob/main/docs/LED
 If you own a modern thousand-dollar laptop, this won't work; your mic line is always noisy, even when disabled.<sub/>
 
 <br>
-<br>
 
-# Or 1kB/s (press enter & play wav at the same time)
+### Or 1kB/s (press enter & play wav at the same time)
 
 <p align="center">
   <img src="docs/aux/aux_cord.png">
@@ -76,26 +75,14 @@ See [aux.cpp](https://github.com/compromise-evident/airgapFTP/blob/main/docs/aux
 If you own a modern thousand-dollar laptop, this won't work; your mic line is always noisy, even when disabled.<sub/>
 
 <br>
-<br>
 
-# Or truly-instant-NAS (no systemd)
+### Or truly instant NAS (no systemd)
 
-* **Your computer**<br>
-Paste this command to Startup apps, restart:<br>
-`
-sh -c "python3 -m http.server 8000 -d ~/Public"
-`
-
-* **NAS computer**<br>
-Paste this command to Startup apps, replace "hostname" with the hostname of YOUR computer, restart:<br>
-`
-sh -c "while :; do sleep 10; wget -m -np -N -R 'index.html*' hostname.local:8000/; done"
-`
+https://github.com/compromise-evident/what-not/blob/main/truly_instant_NAS
 
 <br>
-<br>
 
-# Send files to sending machine via local network.
+### Send files to sending machine via local network.
 
 * Sending machine should have the Gnome desktop environment, unfortunately.
   Go to Settings, Sharing. Enable sharing, then enable
@@ -107,9 +94,14 @@ sh -c "while :; do sleep 10; wget -m -np -N -R 'index.html*' hostname.local:8000
   in "Browse Network" or "Other Locations" and keep dropping files in folder "Send".
 
 <br>
+
+### DIY
+
+https://github.com/compromise-evident/what-not/blob/main/process_file_by_bits.cpp
+
 <br>
 
-# Appendix
+### Appendix
 
 airgapFTP has been written about on
 [HACKADAY](https://hackaday.com/2024/03/19/photoresistors-provide-air-gap-data-transfer-slowly/). Thank you for the recognition.
