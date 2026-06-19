@@ -1,8 +1,5 @@
-/// LED - airgap FTP at 345B/s using                                            Run it: "apt install g++ geany". Open this in Geany. Hit F9 once. F5 to run.
-///       LED & photoresistor.
-
-
-//Do "apt install sox" on both machines.
+/*Airgap FTP at 345B/s using LED & photoresistor.                               Run it: "apt install g++ geany". Open the .cpp in Geany. Hit F9 once. F5 to run.
+Do "apt install sox" on both machines. */
 
 #include <fstream>
 #include <iostream>
