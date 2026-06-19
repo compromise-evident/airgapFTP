@@ -1,8 +1,5 @@
-/// aux - one-way FTP at 1.1kB/s using                                          Run it: "apt install g++ geany". Open this in Geany. Hit F9 once. F5 to run.
-///       typical aux cord (3.5mm TRS.)
-
-
-//Do "apt install sox" on both machines.
+/*One-way FTP at 1.1kB/s using typical aux cord (3.5mm TRS).                    Run it: "apt install g++ geany". Open the .cpp in Geany. Hit F9 once. F5 to run.
+Do "apt install sox" on both machines. */
 
 #include <fstream>
 #include <iostream>
