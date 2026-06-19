@@ -1,5 +1,5 @@
-//Displays recorded raw audio file that is to be decoded by LED.cpp and aux.cpp.
-//Run it: "apt install g++ geany". Open this in Geany. Hit F9 once. F5 to run.
+/*Displays recorded raw audio file that is                                      Run it: "apt install g++ geany". Open the .cpp in Geany. Hit F9 once. F5 to run.
+to be decoded by LED.cpp and aux.cpp. */
 
 #include <fstream>
 #include <iostream>
