@@ -1,8 +1,10 @@
 /*One-way FTP at 1.1kB/s using typical aux cord (3.5mm TRS).                    Run it: "apt install g++ geany". Open the .cpp in Geany. Hit F9 once. F5 to run.
 Do "apt install sox" on both machines. */
 
+#include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <string>
 using namespace std;
 int main()
 {	ifstream in_stream;
@@ -33,75 +35,18 @@ int main()
 	
 	//______________________________________________________Encode____________________________________________________//
 	if(user_option == 'y')
-	{	//Gets path to file from user.
-		cout << "Drop/enter file:\n";
+	{	//Gets path (files & folders).
+		std::cout << "\nDrop/enter file:\n";
+		std::string path; std::getline(std::cin, path); if(path[0] == '\0') {std::getline(std::cin, path);}
+		if(path[0] == '\'') {path.erase(0, 1); path.pop_back(); path.pop_back();} //Fixes path if drag-n-dropped.
+		in_stream.open(path); if(!in_stream) {std::cout << "\nNo path " << path << "\n"; return 1;} in_stream.close();
 		
-		//..........Gets path then fixes it if drag-n-dropped, regardless of single-quote presence and "enter"
-		//..........not being cleared, meaning you can have options before this, where the user presses enter.
-		char path_to_file[10000] = {'\0'};
-		{	for(int a = 0; a < 10000; a++) {path_to_file[a] = '\0';}
-			cin.getline(path_to_file, 10000);
-			if(path_to_file[0] == '\0')
-			{	for(int a = 0; a < 10000; a++) {path_to_file[a] = '\0';}
-				cin.getline(path_to_file, 10000);
-			}
-			if(path_to_file[0] == '\0') {cout << "\nNo path given.\n"; return 0;}
-			
-			//..........Removes last space in path_to_file[].
-			bool existence_of_last_space = false;
-			for(int a = 9999; a > 0; a--)
-			{	if(path_to_file[a] != '\0')
-				{	if(path_to_file[a] == ' ') {path_to_file[a] = '\0'; existence_of_last_space = true;}
-					break;
-				}
-			}
-			
-			//..........Removes encapsulating single-quotes in path_to_file[].
-			bool existence_of_encapsulating_single_quotes = false;
-			if(path_to_file[0] == '\'')
-			{	for(int a = 0; a < 9999; a++)
-				{	path_to_file[a] = path_to_file[a + 1];
-					if(path_to_file[a] == '\0') 
-					{	if(path_to_file[a - 1] != '\'') {cout << "\nBad path.\n"; return 0;}
-						path_to_file[a - 1] = '\0';
-						existence_of_encapsulating_single_quotes = true;
-						break;
-					}
-				}
-			}
-			
-			//..........Replaces all "'\''" with "'" in path_to_file[].
-			int single_quote_quantity = 0;
-			for(int a = 0; a < 10000; a++)
-			{	if(path_to_file[a] == '\'') {single_quote_quantity++;}
-			}
-			
-			if((single_quote_quantity                     >    0)
-			&& (existence_of_last_space                  == true)
-			&& (existence_of_encapsulating_single_quotes == true))
-			{	if((single_quote_quantity % 3) != 0) {cout << "\nBad path.\n"; return 0;}
-				
-				for(int a = 0; a < 9997; a++)
-				{	if(path_to_file[a] == '\'')
-					{	int temp = (a + 1);
-						for(; temp < 9997; temp++)
-						{	path_to_file[temp] = path_to_file[temp + 3];
-						}
-					}
-				}
-			}
-		}
-		
-		//Checks if file exists (failure can be bad path info as well.)
-		in_stream.open(path_to_file);
-		if(in_stream.fail() == true) {in_stream.close(); cout << "\n\nNo such file or directory.\n";             return 0;}
-		char sniffed_one_file_character;
-		in_stream.get(sniffed_one_file_character);
-		if(in_stream.eof() == true) {in_stream.close();  cout << "\n\nNothing to process, the file is empty.\n"; return 0;}
-		in_stream.close();
+		//Checks if file is empty.
+		unsigned long long size = std::filesystem::file_size(path);
+		if(size == 0) {std::cout << "\nEmpty file.\n"; return 0;}
 		
 		//Encodes.
-		in_stream.open(path_to_file);
+		in_stream.open(path);
 		out_stream.open("temp/encoded.raw");
 		for(int a = 0; a < 176400; a++) {out_stream.put(127);} //..........4s silence (44100 * 4 = 176400.)
 		int temp_file_byte_normal;
